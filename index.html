@@ -6,20 +6,22 @@
   <title>amoeoo-phyAI · Physical AI & NetDevOps SuperPortal</title>
   <style>
     :root {
-      --bg: #080c14;
-      --bg-panel: #0e1522;
-      --bg-card: #131c2e;
-      --bg-code: #090e18;
-      --border: #1e2d47;
-      --border-hi: #2d4670;
-      --text: #e2e8f0;
-      --text-dim: #94a3b8;
-      --text-muted: #64748b;
-      --cyan: #38bdf8;
-      --emerald: #10b981;
-      --amber: #f59e0b;
-      --purple: #a78bfa;
-      --rose: #fb7185;
+      --bg: #000000;
+      --bg-panel: #111111;
+      --bg-card: #1a1a1a;
+      --bg-code: #0a0a0a;
+      --border: #2a2a2a;
+      --border-hi: #4a4a4a;
+      --text: #f5f5f5;
+      --text-dim: #a3a3a3;
+      --text-muted: #737373;
+      --cyan: #f5f5f5;
+      --emerald: #d4d4d4;
+      --amber: #a3a3a3;
+      --purple: #c4c4c4;
+      --rose: #8a8a8a;
+      --accent: #ffffff;
+      --accent-ink: #000000;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -35,7 +37,7 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(8, 12, 20, 0.9);
+      background: rgba(0, 0, 0, 0.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
@@ -55,13 +57,15 @@
       gap: 0.75rem;
     }
     .brand-badge {
-      background: linear-gradient(135deg, #0284c7, #10b981);
-      color: #041019;
+      background: var(--accent);
+      color: var(--accent-ink);
       font-family: var(--mono);
       font-weight: 800;
-      font-size: 0.8rem;
-      padding: 0.3rem 0.55rem;
-      border-radius: 6px;
+      font-size: 0.5rem;
+      letter-spacing: 0.02em;
+      padding: 0.16rem 0.3rem;
+      border-radius: 3px;
+      line-height: 1.2;
     }
     .brand-title { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; }
     .brand-sub { font-family: var(--mono); font-size: 0.72rem; color: var(--cyan); }
@@ -79,15 +83,15 @@
     }
     .tab-btn:hover { color: var(--text); background: var(--bg-card); }
     .tab-btn.active {
-      color: var(--cyan);
-      background: rgba(56, 189, 248, 0.1);
-      border-color: rgba(56, 189, 248, 0.35);
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.35);
     }
     main { max-width: 1320px; margin: 0 auto; padding: 1.75rem 1.5rem 4rem; }
     .section { display: none; }
     .section.active { display: block; }
     .hero {
-      background: linear-gradient(135deg, var(--bg-panel) 0%, #0b192c 100%);
+      background: var(--bg-panel);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.75rem;
@@ -147,9 +151,9 @@
       cursor: pointer;
     }
     .pill.active {
-      background: rgba(16, 185, 129, 0.14);
-      border-color: var(--emerald);
-      color: var(--emerald);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
     }
     .topo-grid {
       display: grid;
@@ -172,9 +176,10 @@
       display: inline-block;
       margin-bottom: 0.65rem;
     }
-    .z-edge { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
-    .z-aci  { background: rgba(56, 189, 248, 0.15); color: var(--cyan); }
-    .z-gpu  { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
+    .zone-tag { border: 1px solid var(--border-hi); }
+    .z-edge { background: #2a2a2a; color: #e5e5e5; }
+    .z-aci  { background: #1a1a1a; color: #f5f5f5; }
+    .z-gpu  { background: #333333; color: #d4d4d4; }
     .node-card {
       background: var(--bg-panel);
       border: 1px solid var(--border);
@@ -229,8 +234,8 @@
     @media (max-width: 800px) { .slider-box { grid-template-columns: 1fr; } }
     .meter-bar {
       height: 18px;
-      background: var(--bg-code);
-      border: 1px solid var(--border);
+      background: #2a2a2a;
+      border: 1px solid var(--border-hi);
       border-radius: 999px;
       overflow: hidden;
       margin: 0.5rem 0;
@@ -238,7 +243,7 @@
     .meter-fill {
       height: 100%;
       width: 45%;
-      background: linear-gradient(90deg, var(--emerald), var(--amber), var(--rose));
+      background: var(--accent);
       transition: width 0.2s ease;
     }
     pre {
@@ -249,12 +254,12 @@
       overflow-x: auto;
       font-family: var(--mono);
       font-size: 0.79rem;
-      color: #cbd5e1;
+      color: #d4d4d4;
       line-height: 1.5;
     }
     .btn-action {
-      background: var(--cyan);
-      color: #041019;
+      background: var(--accent);
+      color: var(--accent-ink);
       border: none;
       font-family: var(--mono);
       font-weight: 700;
@@ -279,8 +284,8 @@
       font-family: var(--mono);
       font-size: 0.76rem;
     }
-    .stage.pass { border-color: var(--emerald); color: var(--emerald); }
-    .stage.run  { border-color: var(--amber); color: var(--amber); }
+    .stage.pass { border-color: var(--accent); color: var(--accent); }
+    .stage.run  { border-color: var(--text-muted); color: var(--text-dim); }
     footer {
       border-top: 1px solid var(--border);
       padding: 1.5rem;
@@ -289,6 +294,100 @@
       font-size: 0.76rem;
       color: var(--text-muted);
     }
+
+    /* Roadmap tracker */
+    .tracker-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-hi);
+      border-radius: 12px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+      scroll-margin-top: 5.5rem;
+    }
+    .tracker-lead {
+      font-size: 0.86rem;
+      color: var(--text-dim);
+      margin: -0.25rem 0 1rem;
+    }
+    .tracker-progress-wrap { margin-bottom: 1rem; }
+    .tracker-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 0.4rem;
+    }
+    #tracker-pct { color: var(--text); font-weight: 700; }
+    .tracker-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .tracker-item {
+      display: grid;
+      grid-template-columns: 1fr 10.5rem;
+      gap: 0.6rem;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+    }
+    @media (max-width: 640px) {
+      .tracker-item { grid-template-columns: 1fr; }
+    }
+    .tracker-item textarea {
+      width: 100%;
+      resize: none;
+      overflow: hidden;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      line-height: 1.4;
+      padding: 0.35rem 0.4rem;
+      border-radius: 4px;
+      field-sizing: content;
+    }
+    .tracker-item textarea:focus {
+      outline: none;
+      border-color: var(--border-hi);
+      background: var(--bg-code);
+    }
+    .tracker-item select {
+      width: 100%;
+      background: var(--bg-panel);
+      color: var(--text);
+      border: 1px solid var(--border-hi);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      padding: 0.4rem 0.5rem;
+      cursor: pointer;
+    }
+    .tracker-item.is-done { border-color: var(--accent); }
+    .tracker-item.is-done textarea {
+      color: var(--text-dim);
+      text-decoration: line-through;
+    }
+    .tracker-item.is-progress { border-color: var(--border-hi); }
+    .btn-reset {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-hi);
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-reset:hover { background: var(--bg-card); color: var(--accent); }
   </style>
 </head>
 <body>
@@ -302,6 +401,7 @@
         </div>
       </div>
       <nav>
+        <button class="tab-btn" type="button" onclick="focusTracker()">00 · Tracker</button>
         <button class="tab-btn active" onclick="switchTab('overview', this)">01 · Edge-to-Core Topology</button>
         <button class="tab-btn" onclick="switchTab('roce', this)">02 · 400G/800G RoCEv2 Fabric</button>
         <button class="tab-btn" onclick="switchTab('iac', this)">03 · NetBox SSOT & nac-test</button>
@@ -311,6 +411,24 @@
   </header>
 
   <main>
+    <section id="tracker" class="tracker-panel" aria-labelledby="tracker-title">
+      <div class="panel-head">
+        <div class="panel-title" id="tracker-title">Tracker</div>
+        <button type="button" class="btn-reset" id="tracker-reset">Reset</button>
+      </div>
+      <p class="tracker-lead">Personal progress on this portal’s topics and roadmap. Names and status are saved in this browser only.</p>
+      <div class="tracker-progress-wrap">
+        <div class="tracker-progress-meta">
+          <span id="tracker-pct">0%</span>
+          <span id="tracker-count">0 of 8 done</span>
+        </div>
+        <div class="meter-bar" id="tracker-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Overall tracker progress">
+          <div class="meter-fill" id="tracker-fill" style="width:0%;"></div>
+        </div>
+      </div>
+      <ul class="tracker-list" id="tracker-list"></ul>
+    </section>
+
     <!-- TAB 1: OVERVIEW & TOPOLOGY -->
     <section id="overview" class="section active">
       <div class="hero">
@@ -692,6 +810,128 @@ Verify Lossless PFC Priority 3 Queue Policy Applied
     }
 
     document.getElementById('code-viewer').textContent = codeSnippets.netbox;
+
+    const TRACKER_KEY = 'phyai-superportal-tracker-v1';
+    const TRACKER_DEFAULTS = [
+      { id: 'edge-core',   label: 'Edge-to-Core Topology (Physical AI Edge & RAN)', status: 'not-started' },
+      { id: 'roce-fabric', label: '400G/800G RoCEv2 Lossless Fabric', status: 'not-started' },
+      { id: 'netbox-iac',  label: 'NetBox SSOT & nac-test CI/CD', status: 'not-started' },
+      { id: 'zero-trust',  label: 'Zero-Trust ACI Micro-Segmentation', status: 'not-started' },
+      { id: 'multisite',   label: 'Multi-Site ACI Policy', status: 'not-started' },
+      { id: 'ptp-tsn',     label: 'IEEE 1588v2 PTP / TSN Time Sync', status: 'not-started' },
+      { id: 'gpu-pod',     label: 'GPUDirect RDMA Training Pod', status: 'not-started' },
+      { id: 'ndi-drift',   label: 'Nexus Dashboard Insights & Drift Monitor', status: 'not-started' }
+    ];
+    const TRACKER_STATUSES = [
+      ['not-started', 'Not started'],
+      ['in-progress', 'In progress'],
+      ['done', 'Done']
+    ];
+
+    function trackerDefaults() {
+      return TRACKER_DEFAULTS.map(item => Object.assign({}, item));
+    }
+
+    function loadTracker() {
+      try {
+        const raw = localStorage.getItem(TRACKER_KEY);
+        if (!raw) return trackerDefaults();
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || !parsed.length) return trackerDefaults();
+        return parsed.map((item, i) => ({
+          id: item.id || ('item-' + i),
+          label: (typeof item.label === 'string' && item.label.trim())
+            ? item.label
+            : ((TRACKER_DEFAULTS[i] && TRACKER_DEFAULTS[i].label) || 'Untitled'),
+          status: TRACKER_STATUSES.some(s => s[0] === item.status) ? item.status : 'not-started'
+        }));
+      } catch (err) {
+        return trackerDefaults();
+      }
+    }
+
+    function saveTracker(items) {
+      localStorage.setItem(TRACKER_KEY, JSON.stringify(items));
+    }
+
+    function trackerScore(status) {
+      if (status === 'done') return 1;
+      if (status === 'in-progress') return 0.5;
+      return 0;
+    }
+
+    function updateTrackerProgress(items) {
+      const total = items.length;
+      const done = items.filter(i => i.status === 'done').length;
+      const pct = total ? Math.round((items.reduce((sum, i) => sum + trackerScore(i.status), 0) / total) * 100) : 0;
+      document.getElementById('tracker-pct').textContent = pct + '%';
+      document.getElementById('tracker-count').textContent = done + ' of ' + total + ' done';
+      document.getElementById('tracker-fill').style.width = pct + '%';
+      document.getElementById('tracker-bar').setAttribute('aria-valuenow', String(pct));
+    }
+
+    function renderTracker() {
+      const items = loadTracker();
+      const list = document.getElementById('tracker-list');
+      list.innerHTML = '';
+      items.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = 'tracker-item' + (item.status === 'done' ? ' is-done' : item.status === 'in-progress' ? ' is-progress' : '');
+
+        const input = document.createElement('textarea');
+        input.rows = 1;
+        input.value = item.label;
+        input.setAttribute('aria-label', 'Tracker item name');
+        function fit() {
+          input.style.height = 'auto';
+          input.style.height = input.scrollHeight + 'px';
+        }
+        input.addEventListener('input', fit);
+        input.addEventListener('change', function () {
+          const current = loadTracker();
+          const next = input.value.trim() || current[idx].label;
+          current[idx].label = next;
+          input.value = next;
+          saveTracker(current);
+          fit();
+        });
+        requestAnimationFrame(fit);
+
+        const select = document.createElement('select');
+        select.setAttribute('aria-label', 'Status for ' + item.label);
+        TRACKER_STATUSES.forEach(function (pair) {
+          const opt = document.createElement('option');
+          opt.value = pair[0];
+          opt.textContent = pair[1];
+          if (item.status === pair[0]) opt.selected = true;
+          select.appendChild(opt);
+        });
+        select.addEventListener('change', function () {
+          const current = loadTracker();
+          current[idx].status = select.value;
+          saveTracker(current);
+          renderTracker();
+        });
+
+        li.appendChild(input);
+        li.appendChild(select);
+        list.appendChild(li);
+      });
+      updateTrackerProgress(items);
+    }
+
+    function resetTracker() {
+      localStorage.removeItem(TRACKER_KEY);
+      renderTracker();
+    }
+
+    function focusTracker() {
+      const el = document.getElementById('tracker');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.getElementById('tracker-reset').addEventListener('click', resetTracker);
+    renderTracker();
   </script>
 </body>
 </html>
