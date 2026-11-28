@@ -147,7 +147,7 @@
       gap: 0.75rem 1rem;
     }
     .brand { grid-area: brand; min-width: 0; }
-    .theme-toggle { grid-area: toggle; align-self: start; }
+    .header-actions { grid-area: toggle; align-self: start; }
     nav { grid-area: nav; }
     .brand {
       display: flex;
@@ -493,32 +493,48 @@
     .btn-reset:hover { background: var(--bg-card); color: var(--accent); }
 
     input[type="range"] { accent-color: var(--accent); width: 100%; }
-    .theme-toggle {
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .icon-btn {
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0;
       border: 1px solid var(--border-hi);
       border-radius: 8px;
-      overflow: hidden;
       background: var(--bg-card);
+      color: var(--text);
+      cursor: pointer;
+      text-decoration: none;
       flex: 0 0 auto;
     }
-    .theme-btn {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      color: var(--text-dim);
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 0.45rem 0.8rem;
-      cursor: pointer;
-      min-width: 4.4rem;
-    }
-    .theme-btn + .theme-btn { border-left: 1px solid var(--border-hi); }
-    .theme-btn:hover { color: var(--text); }
-    .theme-btn.active,
-    .theme-btn[aria-pressed="true"] {
+    .icon-btn:hover {
       background: var(--accent);
       color: var(--accent-ink);
+      border-color: var(--accent);
+    }
+    .icon-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .icon-btn svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      display: block;
+    }
+    .icon-btn svg.theme-icon-sun,
+    .icon-btn svg.theme-icon-moon { display: none; }
+    html[data-theme="dark"] .icon-btn svg.theme-icon-sun,
+    html:not([data-theme]) .icon-btn svg.theme-icon-sun { display: block; }
+    html[data-theme="light"] .icon-btn svg.theme-icon-moon { display: block; }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme]) .icon-btn svg.theme-icon-sun { display: none; }
+      html:not([data-theme]) .icon-btn svg.theme-icon-moon { display: block; }
     }
   </style>
 </head>
@@ -532,9 +548,21 @@
           <div class="brand-sub">Physical AI · Cisco ACI/VXLAN · 400G RoCEv2 · NetBox IaC SuperPortal</div>
         </div>
       </div>
-      <div class="theme-toggle" role="group" aria-label="Page background">
-        <button type="button" class="theme-btn" id="theme-light" aria-pressed="false" onclick="setTheme('light')">White</button>
-        <button type="button" class="theme-btn" id="theme-dark" aria-pressed="true" onclick="setTheme('dark')">Black</button>
+      <div class="header-actions">
+        <button type="button" class="icon-btn" id="theme-toggle" aria-label="Switch to white background" title="Switch to white background" onclick="toggleTheme()">
+          <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"></path>
+          </svg>
+        </button>
+        <a class="icon-btn" href="https://github.com/amoeoo-phyai/amoeoo-phyai.github.io/issues/new?title=Feedback&amp;labels=feedback" target="_blank" rel="noopener" title="Send feedback on GitHub" aria-label="Send feedback on GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+        </a>
       </div>
       <nav>
         <button class="tab-btn" type="button" onclick="focusTracker()">00 · Tracker</button>
@@ -1076,14 +1104,13 @@ Verify Lossless PFC Priority 3 Queue Policy Applied
     }
 
     function syncThemeToggle() {
-      var theme = currentTheme();
-      var lightBtn = document.getElementById('theme-light');
-      var darkBtn = document.getElementById('theme-dark');
-      if (!lightBtn || !darkBtn) return;
-      lightBtn.classList.toggle('active', theme === 'light');
-      darkBtn.classList.toggle('active', theme === 'dark');
-      lightBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
-      darkBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      var label = currentTheme() === 'dark'
+        ? 'Switch to white background'
+        : 'Switch to black background';
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('title', label);
     }
 
     function setTheme(theme) {
@@ -1092,6 +1119,10 @@ Verify Lossless PFC Priority 3 Queue Policy Applied
       document.documentElement.style.colorScheme = next;
       try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
       syncThemeToggle();
+    }
+
+    function toggleTheme() {
+      setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
     }
 
     syncThemeToggle();
