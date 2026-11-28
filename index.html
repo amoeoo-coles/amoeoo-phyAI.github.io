@@ -1,44 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>amoeoo-phyAI — Coming soon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>amoeoo-phyAI · Physical AI & NetDevOps SuperPortal</title>
   <style>
-    :root { color-scheme: dark; }
+    :root {
+      --bg: #080c14;
+      --bg-panel: #0e1522;
+      --bg-card: #131c2e;
+      --bg-code: #090e18;
+      --border: #1e2d47;
+      --border-hi: #2d4670;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --cyan: #38bdf8;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --purple: #a78bfa;
+      --rose: #fb7185;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
-      background: #0b1220;
-      color: #e8eefc;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
-    main {
-      text-align: center;
-      padding: 2rem;
-      max-width: 40rem;
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(8, 12, 20, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
-    h1 { margin: 0 0 0.5rem; font-size: 1.75rem; }
-    p { margin: 0.5rem 0; color: #b7c4de; line-height: 1.5; }
-    .badge {
-      display: inline-block;
-      margin-bottom: 1.25rem;
-      padding: 0.25rem 0.7rem;
-      border: 1px solid #335;
-      border-radius: 999px;
+    .nav-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #0284c7, #10b981);
+      color: #041019;
+      font-family: var(--mono);
+      font-weight: 800;
       font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      color: #9ec1ff;
+      padding: 0.3rem 0.55rem;
+      border-radius: 6px;
+    }
+    .brand-title { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; }
+    .brand-sub { font-family: var(--mono); font-size: 0.72rem; color: var(--cyan); }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover { color: var(--text); background: var(--bg-card); }
+    .tab-btn.active {
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+    main { max-width: 1320px; margin: 0 auto; padding: 1.75rem 1.5rem 4rem; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .hero {
+      background: linear-gradient(135deg, var(--bg-panel) 0%, #0b192c 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    h1 { font-size: 1.75rem; line-height: 1.2; margin-bottom: 0.65rem; }
+    .hero p { color: var(--text-dim); font-size: 0.94rem; margin-bottom: 1rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .kpi {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+    }
+    .kpi-val { font-family: var(--mono); font-size: 1.15rem; font-weight: 700; color: var(--cyan); }
+    .kpi-lbl { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; }
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-title { font-size: 1.05rem; font-weight: 600; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .pill {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-hi);
+      background: var(--bg-card);
+      color: var(--text-dim);
+      cursor: pointer;
+    }
+    .pill.active {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+    .topo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .topo-grid { grid-template-columns: 1fr; } }
+    .zone-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      position: relative;
+    }
+    .zone-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.65rem;
+    }
+    .z-edge { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
+    .z-aci  { background: rgba(56, 189, 248, 0.15); color: var(--cyan); }
+    .z-gpu  { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
+    .node-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 0.85rem;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .node-card:hover, .node-card.selected {
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }
+    .node-title { font-family: var(--mono); font-size: 0.82rem; font-weight: 700; color: var(--text); }
+    .node-meta { font-size: 0.76rem; color: var(--text-dim); margin-top: 0.2rem; }
+    .inspector {
+      margin-top: 1rem;
+      background: var(--bg-code);
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    th, td {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      background: var(--bg-card);
+    }
+    td code {
+      font-family: var(--mono);
+      background: var(--bg-code);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      color: var(--emerald);
+      font-size: 0.78rem;
+    }
+    .slider-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 800px) { .slider-box { grid-template-columns: 1fr; } }
+    .meter-bar {
+      height: 18px;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    .meter-fill {
+      height: 100%;
+      width: 45%;
+      background: linear-gradient(90deg, var(--emerald), var(--amber), var(--rose));
+      transition: width 0.2s ease;
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.79rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .btn-action {
+      background: var(--cyan);
+      color: #041019;
+      border: none;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-action:hover { filter: brightness(1.1); }
+    .stage-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 850px) { .stage-strip { grid-template-columns: 1fr; } }
+    .stage {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+    }
+    .stage.pass { border-color: var(--emerald); color: var(--emerald); }
+    .stage.run  { border-color: var(--amber); color: var(--amber); }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="nav-wrap">
+      <div class="brand">
+        <span class="brand-badge">PHY-AI // ACI</span>
+        <div>
+          <div class="brand-title">amoeoo-phyAI.github.io</div>
+          <div class="brand-sub">Physical AI · Cisco ACI/VXLAN · 400G RoCEv2 · NetBox IaC SuperPortal</div>
+        </div>
+      </div>
+      <nav>
+        <button class="tab-btn active" onclick="switchTab('overview', this)">01 · Edge-to-Core Topology</button>
+        <button class="tab-btn" onclick="switchTab('roce', this)">02 · 400G/800G RoCEv2 Fabric</button>
+        <button class="tab-btn" onclick="switchTab('iac', this)">03 · NetBox SSOT & nac-test</button>
+        <button class="tab-btn" onclick="switchTab('policy', this)">04 · Zero-Trust ACI & Multi-Site</button>
+      </nav>
+    </div>
+  </header>
+
   <main>
-    <div class="badge">GitHub Pages</div>
-    <h1>Coming soon — pending approval</h1>
-    <p>The Physical AI &amp; NetDevOps SuperPortal is staged on a feature branch and will go live here after the pull request is approved and merged.</p>
+    <!-- TAB 1: OVERVIEW & TOPOLOGY -->
+    <section id="overview" class="section active">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Reference Architecture · Deterministic Edge-to-Training Fabric</div>
+          <h1>Physical AI Infrastructure &amp; NetDevOps Automation Portal</h1>
+          <p>
+            End-to-end blueprint bridging deterministic robotics/sensor telemetry (IEEE 1588v2 PTP, Private 5G/Wi-Fi 7)
+            through Zero-Trust Cisco ACI micro-segmented fabrics into lossless 400G/800G RoCEv2 GPU training pods—governed
+            declaratively via NetBox SSOT, Cisco Nexus-as-Code, and automated Robot Framework validation.
+          </p>
+          <div class="pill-row">
+            <span class="pill active" onclick="setFlow('telemetry', this)">Flow 1: Edge LiDAR/Vision → Ingestion EPG</span>
+            <span class="pill" onclick="setFlow('training', this)">Flow 2: GPU AllReduce (400G RoCEv2)</span>
+            <span class="pill" onclick="setFlow('cicd', this)">Flow 3: NetBox Webhook → nac-api → nac-test</span>
+          </div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-val">400G / 800G</div><div class="kpi-lbl">Lossless RoCEv2 Leaf-Spine Fabric</div></div>
+          <div class="kpi"><div class="kpi-val">&lt; 1.2 &mu;s</div><div class="kpi-lbl">Cut-Through ASIC Switching Latency</div></div>
+          <div class="kpi"><div class="kpi-val">PTP IEEE 1588v2</div><div class="kpi-lbl">Sub-Microsecond Sensor Clock Sync</div></div>
+          <div class="kpi"><div class="kpi-val">100% IaC</div><div class="kpi-lbl">NetBox SSOT · nac-validate · nac-test</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Interactive Physical AI Edge-to-Data-Center Architecture (Click any node to inspect)</div>
+          <span id="flow-banner" style="font-family:var(--mono);font-size:0.78rem;color:var(--emerald);">
+            Active Path: Edge Robotics (Jetson/PTP) → Private 5G UPF → ACI Border Leaf → Ingestion VRF
+          </span>
+        </div>
+
+        <div class="topo-grid">
+          <div class="zone-box">
+            <span class="zone-tag z-edge">ZONE 1 · PHYSICAL AI EDGE &amp; RAN</span>
+            <div class="node-card selected" onclick="inspectNode('edge-compute', this)">
+              <div class="node-title">NVIDIA Jetson AGX Orin / IGX</div>
+              <div class="node-meta">ROS 2 Humble · Isaac ROS · Deterministic Sensor Fusion</div>
+            </div>
+            <div class="node-card" onclick="inspectNode('edge-ptp', this)">
+              <div class="node-title">PTP Grandmaster &amp; TSN Switch</div>
+              <div class="node-meta">IEEE 1588v2 · 802.1AS · LiDAR / Stereo Camera Sync</div>
+            </div>
+            <div class="node-card" onclick="inspectNode('edge-5g', this)">
+              <div class="node-title">Private 5G UPF / Wi-Fi 7 AP</div>
+              <div class="node-meta">URLLC Slice · S-NSSAI Mapping to ACI External EPG</div>
+            </div>
+          </div>
+
+          <div class="zone-box">
+            <span class="zone-tag z-aci">ZONE 2 · CISCO ACI ZERO-TRUST FABRIC</span>
+            <div class="node-card" onclick="inspectNode('aci-spine', this)">
+              <div class="node-title">SPINE-201 / SPINE-202 (N9K-C9364D-GX2A)</div>
+              <div class="node-meta">400G/800G COOP Database · IS-IS Underlay · Infra VLAN 4</div>
+            </div>
+            <div class="node-card" onclick="inspectNode('aci-leaf', this)">
+              <div class="node-title">LEAF-101 / LEAF-102 (N9K-C9348D-GX2A)</div>
+              <div class="node-meta">vPC Anycast Gateway · EPG Contracts · vzAnyvzFilter</div>
+            </div>
+            <div class="node-card" onclick="inspectNode('aci-ndi', this)">
+              <div class="node-title">APIC Cluster + Nexus Dashboard Insights</div>
+              <div class="node-meta">Telemetry Streaming · Microburst &amp; Drift Detection</div>
+            </div>
+          </div>
+
+          <div class="zone-box">
+            <span class="zone-tag z-gpu">ZONE 3 · LOSSLESS GPU &amp; NVMe-oF POD</span>
+            <div class="node-card" onclick="inspectNode('gpu-nodes', this)">
+              <div class="node-title">8x GPU Training Nodes (ConnectX-7 400GbE)</div>
+              <div class="node-meta">GPUDirect RDMA · NCCL AllReduce · PFC Priority 3</div>
+            </div>
+            <div class="node-card" onclick="inspectNode('nvme-storage', this)">
+              <div class="node-title">All-Flash NVMe-oF / RoCEv2 Storage</div>
+              <div class="node-meta">High-Throughput Checkpoint &amp; Digital Twin Replay</div>
+            </div>
+            <div class="node-card" onclick="inspectNode('netbox-cicd', this)">
+              <div class="node-title">NetBox SSOT + GitLab / Azure DevOps</div>
+              <div class="node-meta">NetBox-to-YAML · nac-validate · nac-api · nac-test</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inspector" id="node-inspector">
+          <strong>[INSPECTOR // NVIDIA Jetson AGX Orin / IGX]</strong><br/>
+          Role: Real-time edge inference &amp; sensor capture node.<br/>
+          Uplink: Dual-homed 25GbE / Private 5G URLLC bearer tagged into <code>EPG-PHYAI-EDGE-ROBOTICS</code>.<br/>
+          QoS Marking: DSCP 46 (EF) for control loops; DSCP 26 (AF31) for raw point-cloud/video ingestion.
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 400G/800G ROCEV2 FABRIC -->
+    <section id="roce" class="section">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Lossless RoCEv2 Congestion Control Simulator (ECN + PFC Priority 3 + DLB)</div>
+          <span style="font-family:var(--mono);font-size:0.78rem;color:var(--cyan);">ASIC: Cisco Cloud Scale (N9K-GX2A)</span>
+        </div>
+        <div class="slider-box">
+          <div>
+            <label for="loadRange" style="font-family:var(--mono);font-size:0.82rem;">
+              Simulated GPU AllReduce Link Utilization: <strong id="loadVal" style="color:var(--cyan);">62%</strong> (248 Gbps / 400 Gbps)
+            </label>
+            <input type="range" id="loadRange" min="10" max="100" value="62" style="width:100%;margin-top:0.6rem;" oninput="updateRoce(this.value)" />
+            <div class="meter-bar"><div class="meter-fill" id="queueFill" style="width:62%;"></div></div>
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.72rem;color:var(--text-muted);">
+              <span>0 KB (Empty)</span>
+              <span style="color:var(--emerald);">K_min: 150 KB (ECN Start)</span>
+              <span style="color:var(--amber);">K_max: 1500 KB</span>
+              <span style="color:var(--rose);">XOFF: 2400 KB (PFC)</span>
+            </div>
+          </div>
+          <div class="inspector" id="roceStatus" style="margin-top:0;">
+            <strong>[QUEUE TELEMETRY // eth1/53 - eth1/54 (400G Uplink)]</strong><br/>
+            Buffer Occupancy: <strong>740 KB</strong> | WRED/ECN Probability: <strong>34% CE-marked packets</strong><br/>
+            PFC Priority 3 (No-Drop): <strong>ACTIVE (0 Pause Frames sent)</strong><br/>
+            Load Balancing: <strong>Dynamic Load Balancing (DLB) Flowlet Spraying Healthy</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Hardware &amp; Fabric Profile Matrix (Cisco ACI vs. NX-OS VXLAN EVPN)</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Fabric Layer / Parameter</th>
+              <th>Cisco ACI 6.x Implementation</th>
+              <th>NX-OS VXLAN EVPN Equivalent</th>
+              <th>Physical AI / RoCEv2 Requirement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Leaf / Spine Hardware</td>
+              <td><code>N9K-C9348D-GX2A</code> / <code>N9K-C9364D-GX2A</code></td>
+              <td><code>N9K-C9348D-GX2A</code> / <code>N9K-C9364D-GX2A</code></td>
+              <td>400G/800G line-rate, deep shared buffer, hardware DLB</td>
+            </tr>
+            <tr>
+              <td>Fabric Uplinks</td>
+              <td><code>eth1/53</code>, <code>eth1/54</code> (400G QSFP-DD)</td>
+              <td><code>Ethernet1/53</code>, <code>Ethernet1/54</code> (P2P /31)</td>
+              <td>Non-blocking 1:1 oversubscription for GPU rail links</td>
+            </tr>
+            <tr>
+              <td>Lossless Queue Class</td>
+              <td>ACI QoS Level 3 (No-Drop, PFC <code>cos 3</code>)</td>
+              <td><code>network-qos</code> MTU 9216 + <code>pause pfc-cos 3</code></td>
+              <td>Zero packet drop during NCCL AllReduce bursts</td>
+            </tr>
+            <tr>
+              <td>Congestion Marking</td>
+              <td>WRED + ECN (<code>K_min 150KB</code>, <code>K_max 1500KB</code>)</td>
+              <td><code>random-detect minimum-threshold 150 kbytes ecn</code></td>
+              <td>DCQCN rate reduction before PFC XOFF triggers</td>
+            </tr>
+            <tr>
+              <td>Overlay / Tenant Isolation</td>
+              <td>Tenant <code>tn-PHYAI-PROD</code> · VRF · BD · EPG</td>
+              <td>Tenant VRF · L3VNI <code>50001</code> · L2VNI <code>30101</code></td>
+              <td>Strict isolation between Edge Robotics &amp; GPU Cluster</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: NETBOX SSOT & IAC PIPELINE -->
+    <section id="iac" class="section">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Declarative NetDevOps CI/CD Pipeline (NetBox SSOT → Cisco Nexus-as-Code)</div>
+          <button class="btn-action" onclick="runPipeline()">▶ Simulate CI/CD Pipeline Run</button>
+        </div>
+
+        <div class="stage-strip" id="pipeline-stages">
+          <div class="stage pass" id="st-1">1. NetBox Webhook<br/>SSOT Delta Captured</div>
+          <div class="stage pass" id="st-2">2. Python Sync<br/>netbox_to_nac.py</div>
+          <div class="stage pass" id="st-3">3. nac-validate<br/>Schema &amp; Policy Lint</div>
+          <div class="stage pass" id="st-4">4. nac-api Push<br/>APIC Idempotent Apply</div>
+          <div class="stage pass" id="st-5">5. nac-test + Grafana<br/>Robot &amp; Drift Verify</div>
+        </div>
+
+        <div class="pill-row" style="margin-bottom:0.85rem;">
+          <span class="pill active" onclick="showCode('netbox', this)">netbox_fabric.yml (SSOT)</span>
+          <span class="pill" onclick="showCode('nac', this)">aci_phyai_fabric.nac.yaml</span>
+          <span class="pill" onclick="showCode('robot', this)">nac_test_roce.robot</span>
+        </div>
+
+        <pre id="code-viewer"></pre>
+      </div>
+    </section>
+
+    <!-- TAB 4: ZERO-TRUST ACI & MULTI-SITE -->
+    <section id="policy" class="section">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Zero-Trust ACI Micro-Segmentation Contract Matrix (Tenant: tn-PHYAI-PROD)</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Consumer EPG</th>
+              <th>Provider EPG</th>
+              <th>ACI Contract &amp; Filter</th>
+              <th>Telemetry / Security Enforcement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>EPG-EDGE-ROBOTICS</code></td>
+              <td><code>EPG-INGEST-BROKER</code></td>
+              <td><code>ctr-ros2-dds-mqtt</code> (UDP 7400-7500, TCP 8883)</td>
+              <td>Stateful contract + Nexus Dashboard microburst alert</td>
+            </tr>
+            <tr>
+              <td><code>EPG-INGEST-BROKER</code></td>
+              <td><code>EPG-NVMEOF-STORAGE</code></td>
+              <td><code>ctr-nvme-roce-p3</code> (UDP 4420, DSCP 26 / CoS 3)</td>
+              <td>Dedicated lossless QoS group; East-West isolated</td>
+            </tr>
+            <tr>
+              <td><code>EPG-GPU-TRAIN-RAIL1</code></td>
+              <td><code>EPG-GPU-TRAIN-RAIL1</code></td>
+              <td>Intra-EPG Isolation Disabled + <code>ctr-nccl-rdma</code></td>
+              <td>GPUDirect RDMA RoCEv2 (UDP 4791) with ECN marking</td>
+            </tr>
+            <tr>
+              <td><code>EPG-NETBOX-CICD</code></td>
+              <td><code>oob-mgmt / APIC</code></td>
+              <td><code>ctr-nac-api-https</code> (TCP 443, RBAC Service User)</td>
+              <td>Zero manual GUI changes; Grafana drift monitor</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    amoeoo-phyAI.github.io · Architected by Aung Moe Oo (CCIE Emeritus) · Physical AI, Cisco ACI/VXLAN &amp; NetDevOps Automation
+  </footer>
+
+  <script>
+    const nodeDetails = {
+      'edge-compute': '<strong>[INSPECTOR // NVIDIA Jetson AGX Orin / IGX]</strong><br/>Role: Real-time edge inference &amp; sensor capture node.<br/>Uplink: Dual-homed 25GbE / Private 5G URLLC bearer tagged into <code>EPG-PHYAI-EDGE-ROBOTICS</code>.<br/>QoS Marking: DSCP 46 (EF) for actuator control; DSCP 26 (AF31) for LiDAR/vision ingestion.',
+      'edge-ptp': '<strong>[INSPECTOR // IEEE 1588v2 PTP Grandmaster &amp; TSN]</strong><br/>Profile: ITU-T G.8275.1 / IEEE 802.1AS Boundary Clock on Leaf switches.<br/>Accuracy: &lt; 100 ns hardware timestamping across multi-camera and LiDAR arrays.',
+      'edge-5g': '<strong>[INSPECTOR // Private 5G UPF &amp; Wi-Fi 7]</strong><br/>Integration: 5G Network Slice (S-NSSAI) mapped per-VRF into Cisco ACI L3Out.<br/>Handoff: BGP EVPN / VRF-Lite with deterministic latency SLA enforcement.',
+      'aci-spine': '<strong>[INSPECTOR // SPINE-201 &amp; SPINE-202 (N9K-C9364D-GX2A)]</strong><br/>Fabric Role: 400G/800G non-blocking backbone, COOP endpoint database, IS-IS underlay.<br/>Multicast / BUM: Spine proxy + PIM BiDir on Infra VLAN 4.',
+      'aci-leaf': '<strong>[INSPECTOR // LEAF-101 &amp; LEAF-102 (N9K-C9348D-GX2A)]</strong><br/>Port Profile: Host-facing 100G/400G rail ports; Spine uplinks <code>eth1/53-54</code> at 400G.<br/>Policy: Hardware-enforced EPG contracts, vzAny shared services, and PFC CoS 3.',
+      'aci-ndi': '<strong>[INSPECTOR // APIC &amp; Nexus Dashboard Insights]</strong><br/>Telemetry: Hardware flow telemetry (FT) tracking RoCEv2 queue depth, ECN marks, and PFC pauses.<br/>Compliance: Continuous drift detection against NetBox SSOT intent.',
+      'gpu-nodes': '<strong>[INSPECTOR // 8x GPU Training Nodes (ConnectX-7 400GbE)]</strong><br/>Topology: Rail-optimized multi-NIC leaf attachment for NCCL AllReduce.<br/>Transport: RoCEv2 (UDP 4791) with DCQCN + GPUDirect RDMA bypassing host CPU.',
+      'nvme-storage': '<strong>[INSPECTOR // All-Flash NVMe-oF / RoCEv2 Storage]</strong><br/>Workload: High-IOPS digital twin replay datasets &amp; multi-terabyte model checkpoints.<br/>SLA: Zero-drop CoS 3 queue isolated from general management traffic.',
+      'netbox-cicd': '<strong>[INSPECTOR // NetBox SSOT &amp; CI/CD Pipeline]</strong><br/>Workflow: NetBox Webhook → Python YAML generator → <code>nac-validate</code> → <code>nac-api</code> → <code>nac-test</code>.<br/>Observability: InfluxDB + Grafana pre/post-change state verification.'
+    };
+
+    const codeSnippets = {
+      netbox: `# NetBox Single Source of Truth (SSOT) Export — Site: MEL-PHYAI-DC01
+site:
+  name: MEL-PHYAI-DC01
+  aci_fabric_id: 1
+  infra_vlan: 4
+devices:
+  - name: LEAF-101
+    role: aci-leaf
+    model: N9K-C9348D-GX2A
+    node_id: 101
+    pod_id: 1
+    uplinks:
+      - interface: eth1/53
+        speed: 400G
+        remote_device: SPINE-201
+      - interface: eth1/54
+        speed: 400G
+        remote_device: SPINE-202
+vrfs:
+  - name: vrf-PHYAI-PROD
+    tenant: tn-PHYAI-PROD
+    roce_qos_profile: lossless-cos3-ecn`,
+      nac: `# Cisco Nexus-as-Code (nac-api) Declarative Model
+apic:
+  tenants:
+    - name: tn-PHYAI-PROD
+      vrfs:
+        - name: vrf-PHYAI-PROD
+          preferred_group: false
+      bridge_domains:
+        - name: bd-GPU-RAIL1-400G
+          vrf: vrf-PHYAI-PROD
+          arp_flooding: false
+          unicast_routing: true
+          subnets:
+            - ip: 10.240.10.1/24
+      application_profiles:
+        - name: ap-PHYSICAL-AI
+          endpoint_groups:
+            - name: EPG-GPU-TRAIN-RAIL1
+              bridge_domain: bd-GPU-RAIL1-400G
+              qos_class: level3
+              intra_epg_isolation: unenforced`,
+      robot: `*** Settings ***
+Documentation     Automated Post-Change Verification via nac-test
+Library           RequestsLibrary
+Library           Collections
+
+*** Test Cases ***
+Verify 400G Spine Uplinks Operational On LEAF-101
+    [Tags]    aci    roce    uplink
+    \${resp}=    GET On Session    apic    /api/node/mo/topology/pod-1/node-101/sys/phys-[eth1/53].json
+    Should Be Equal As Strings    \${resp.json()['imdata'][0]['l1PhysIf']['attributes']['operSt']}    up
+    Should Be Equal As Strings    \${resp.json()['imdata'][0]['l1PhysIf']['attributes']['operSpeed']}    400G
+
+Verify Lossless PFC Priority 3 Queue Policy Applied
+    [Tags]    qos    roce    lossless
+    \${qos}=     GET On Session    apic    /api/node/mo/uni/infra/qosinst-default.json
+    Status Should Be    200    \${qos}`
+    };
+
+    function switchTab(id, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function inspectNode(key, el) {
+      document.querySelectorAll('.node-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('node-inspector').innerHTML = nodeDetails[key];
+    }
+
+    function setFlow(type, el) {
+      document.querySelectorAll('.hero .pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      const banner = document.getElementById('flow-banner');
+      if (type === 'telemetry') banner.textContent = 'Active Path: Edge Robotics (Jetson/PTP) → Private 5G UPF → ACI Border Leaf → Ingestion VRF';
+      if (type === 'training')  banner.textContent = 'Active Path: GPU Node 1 (ConnectX-7) → LEAF-101 (400G ECN/PFC) → SPINE-201 → GPU Node 8';
+      if (type === 'cicd')      banner.textContent = 'Active Path: NetBox Webhook → Python YAML Sync → nac-validate → APIC REST → nac-test';
+    }
+
+    function updateRoce(val) {
+      const pct = Number(val);
+      const gbps = Math.round((pct / 100) * 400);
+      const kb = Math.round((pct / 100) * 2600);
+      document.getElementById('loadVal').textContent = pct + '%';
+      document.getElementById('queueFill').style.width = pct + '%';
+      let ecn = '0% (Below K_min)', pfc = 'IDLE (0 Pause Frames)';
+      if (kb >= 150 && kb < 1500) ecn = Math.round(((kb - 150) / 1350) * 80) + '% CE-marked packets';
+      if (kb >= 1500 && kb < 2400) ecn = '100% CE-marked (DCQCN throttling sender)';
+      if (kb >= 2400) { ecn = '100% CE-marked'; pfc = 'ASSERTED XOFF on Priority 3 (Zero Drops)'; }
+      document.getElementById('roceStatus').innerHTML =
+        `<strong>[QUEUE TELEMETRY // eth1/53 - eth1/54 (${gbps} Gbps / 400G)]</strong><br/>` +
+        `Buffer Occupancy: <strong>${kb} KB</strong> | WRED/ECN Marking: <strong>${ecn}</strong><br/>` +
+        `PFC Priority 3 (No-Drop): <strong>${pfc}</strong><br/>` +
+        `Load Balancing: <strong>Dynamic Load Balancing (DLB) Flowlet Spraying Healthy</strong>`;
+    }
+
+    function showCode(key, el) {
+      document.querySelectorAll('#iac .pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('code-viewer').textContent = codeSnippets[key];
+    }
+
+    function runPipeline() {
+      const ids = ['st-1', 'st-2', 'st-3', 'st-4', 'st-5'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        el.className = 'stage run';
+      });
+      ids.forEach((id, idx) => {
+        setTimeout(() => {
+          document.getElementById(id).className = 'stage pass';
+        }, (idx + 1) * 450);
+      });
+    }
+
+    document.getElementById('code-viewer').textContent = codeSnippets.netbox;
+  </script>
 </body>
 </html>
